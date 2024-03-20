@@ -1,0 +1,32 @@
+name: Run Databricks Notebook
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  run_notebook:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+      
+    - name: Install Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.x'
+    
+    - name: Install dependencies
+      run: |
+        python -m pip install databricks-cli
+      
+    - name: Run Databricks Notebook
+      env:
+        DATABRICKS_HOST: ${{ secrets.DATABRICKS_HOST }}
+        DATABRICKS_TOKEN: ${{ secrets.DATABRICKS_TOKEN }}
+        DATABRICKS_CLUSTER_ID: ${{ secrets.DATABRICKS_CLUSTER_ID }}
+        DATABRICKS_NOTEBOOK_PATH: /path/to/your/notebook
+      run: |
+        databricks --token "${DATABRICKS_TOKEN}" --host "${DATABRICKS_HOST}" runs submit --cluster-id "${DATABRICKS_CLUSTER_ID}" --notebook-path "${DATABRICKS_NOTEBOOK_PATH}"
