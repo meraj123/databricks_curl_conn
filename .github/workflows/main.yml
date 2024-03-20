@@ -20,6 +20,10 @@ jobs:
         DATABRICKS_CLUSTER_ID: ${{ secrets.DATABRICKS_CLUSTER_ID }}
         DATABRICKS_NOTEBOOK_PATH: '/Users/merajalam@in.bosch.com/Notebook-V1'
       run: |
-        curl -X POST -H "Authorization: Bearer $DATABRICKS_TOKEN" -H "Content-Type: application/json" \
+        echo "Databricks host: $DATABRICKS_HOST"
+        echo "Databricks token: $DATABRICKS_TOKEN"
+        echo "Databricks cluster ID: $DATABRICKS_CLUSTER_ID"
+        echo "Notebook path: $DATABRICKS_NOTEBOOK_PATH"
+        curl -v -X POST -H "Authorization: Bearer $DATABRICKS_TOKEN" -H "Content-Type: application/json" \
           -d '{"cluster_id":"'$DATABRICKS_CLUSTER_ID'","notebook_task":{"notebook_path":"'$DATABRICKS_NOTEBOOK_PATH'"}}' \
           "https://$DATABRICKS_HOST/api/2.0/jobs/run-now"
