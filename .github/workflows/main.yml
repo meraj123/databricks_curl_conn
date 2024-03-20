@@ -31,4 +31,4 @@ jobs:
         DATABRICKS_CLUSTER_ID: ${{ secrets.DATABRICKS_CLUSTER_ID }}
         DATABRICKS_NOTEBOOK_PATH: '/Users/merajalam@in.bosch.com/Notebook-V1'
       run: |
-        databricks runs submit --cluster-id "${DATABRICKS_CLUSTER_ID}" --notebook-path "${DATABRICKS_NOTEBOOK_PATH}"
+        databricks workspace run-notebook --cluster-id "${DATABRICKS_CLUSTER_ID}" --path "${DATABRICKS_NOTEBOOK_PATH}"
